@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,7 +15,7 @@ public class Quades_Stuff_iD {
     OpMode opmode;
     Telemetry telemetry;
     HardwareMap hardwareMap;
-  private double x,y,z,max,frontRightCommand,backRightCommand,frontLeftCommand,backLeftCommand;
+  private double max,frontRightCommand,backRightCommand,frontLeftCommand,backLeftCommand;
 
 
     public void init(OpMode opMode) {
@@ -30,14 +31,10 @@ public class Quades_Stuff_iD {
 
     }
 
-    public void loop() {
-        x = gamepad1.left_stick_x;
-        y = gamepad1.left_stick_y;
-        z = gamepad1.right_stick_x;
-
-        frontRightCommand=y-x-z;
-        backRightCommand=y+x-z;
-        frontLeftCommand=y+x+z;
+    public void loop(double x, double y, double z) {
+        frontRightCommand=y-x+z;
+        backRightCommand=y-x+z;
+        frontLeftCommand=y-x+z;
         backLeftCommand=y-x+z;
     max=Math.max (1,frontRightCommand);
     max=Math.max (max, frontLeftCommand);
