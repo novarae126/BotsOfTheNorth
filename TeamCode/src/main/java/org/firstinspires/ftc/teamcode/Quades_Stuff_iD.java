@@ -27,15 +27,15 @@ public class Quades_Stuff_iD {
         backright = hardwareMap.get(DcMotor.class, "backRight");
         backleft = hardwareMap.get(DcMotor.class, "backLeft");
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
     public void loop(double x, double y, double z) {
-        frontRightCommand=y-x+z;
-        backRightCommand=y-x+z;
+        frontRightCommand=y+x+z;
+        backRightCommand=y- x-z;
         frontLeftCommand=y-x+z;
-        backLeftCommand=y-x+z;
+        backLeftCommand=y+x+z;
     max=Math.max (1,frontRightCommand);
     max=Math.max (max, frontLeftCommand);
     max=Math.max (max, backLeftCommand);

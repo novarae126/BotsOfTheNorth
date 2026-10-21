@@ -15,8 +15,8 @@ public class Main2027 extends OpMode {
 
     @Override
     public void loop() {
-        x = gamepad1.left_stick_x;
-        y = gamepad2.left_stick_y;
+        x = - gamepad1.left_stick_x;
+        y = - gamepad1.left_stick_y;
         z = gamepad1.right_stick_x;
         robot.drive(x,y,z);
     }
