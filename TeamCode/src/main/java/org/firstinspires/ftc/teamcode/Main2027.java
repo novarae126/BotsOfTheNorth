@@ -19,5 +19,7 @@ public class Main2027 extends OpMode {
         y = - gamepad1.left_stick_y;
         z = gamepad1.right_stick_x;
         robot.drive(x,y,z);
+        robot.intake(gamepad1.left_trigger > 0.5);
+        robot.shoot(gamepad1.dpad_up);
     }
 }

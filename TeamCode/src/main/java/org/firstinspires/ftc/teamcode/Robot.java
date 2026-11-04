@@ -9,21 +9,24 @@ public class Robot {
     OpMode opmode;
     Telemetry telemetry;
     HardwareMap hardwareMap;
-    //private final ShooterTest shooterTest = new ShooterTest();
+    private final ShooterTest shooterTest = new ShooterTest();
     private final Quades_Stuff_iD  quades_stuff_iD = new Quades_Stuff_iD();
-    //private final Intake_Quadestuff2 intake_quadestuff2 = new Intake_Quadestuff2();
+    private final Intake_Quadestuff2 intake_quadestuff2 = new Intake_Quadestuff2();
 
 
     public void init(OpMode opMode) {
     opmode = opMode;
     telemetry=opmode.telemetry;
     hardwareMap = opmode.hardwareMap;
-    //shooterTest.init(opMode);
+    shooterTest.init(opMode);
     quades_stuff_iD.init(opMode);
-    //intake_quadestuff2.init(opMode);
+    intake_quadestuff2.init(opMode);
     }
-    public void shoot(boolean pressed){
-        //shooterTest.shoot(pressed);
+    public void shoot(boolean pressedUp){
+        shooterTest.shoot1speed(pressedUp);
+    }
+    public void intake(boolean pressed){
+        intake_quadestuff2.runIntake(pressed);
     }
     public void drive(double x, double y, double z){
         quades_stuff_iD.loop(x,y,z);
