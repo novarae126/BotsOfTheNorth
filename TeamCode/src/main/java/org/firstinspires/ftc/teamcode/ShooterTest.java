@@ -25,29 +25,37 @@ public class ShooterTest {
         hardwareMap = opmode . hardwareMap;
         shooter = hardwareMap . get(DcMotorEx.class,"shooter");
         transfer = hardwareMap.get(CRServo.class, "transfer");
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-    private void runTransfer(boolean pressed){
-
+    public void runTransfer(boolean pressed){
+        if (pressed) {
+            transfer.setPower(1);
+        }
+        else{
+            transfer.setPower(0);
+        }
     }
 
     public void shoot1speed(boolean pressed){
         if (pressed) {
-            shooter.setVelocity(1040);
+            shooter.setVelocity(1205);
         }
         else{
             shooter.setPower(0);
         }
-    }
-    public void shoot(boolean up, boolean down){
-        if (up && !last){
-            velocity += 10;
-            last = true;
-        }else if (down&& !last) {
-            velocity -= 10;
-            last = true;
-        }else {last = false;}
-        shooter.setVelocity(velocity);
+        telemetry.addData("SHOOT", pressed);
         telemetry.addData("velocity",velocity);
-    }
+   }
+    //public void shoot1speed(boolean up, boolean down){
+   //     if (up && !last){
+     //       velocity += 10;
+       //     last = true;
+       // }else if (down&& !last) {
+        //    velocity -= 10;
+          //  last = true;
+        //}else {last = false;}
+        //shooter.setVelocity(velocity);
+       // telemetry.addData("velocity",velocity);
+    //}
 }

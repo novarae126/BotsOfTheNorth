@@ -22,14 +22,15 @@ public class Robot {
     quades_stuff_iD.init(opMode);
     intake_quadestuff2.init(opMode);
     }
-    public void shoot(boolean pressedUp){
-        shooterTest.shoot1speed(pressedUp);
-    }
-    public void intake(boolean pressed){
-        intake_quadestuff2.runIntake(pressed);
+    public void  shoot(boolean pressed){ shooterTest.shoot1speed(pressed); }
+    //public void shoot(boolean up, boolean down){ shooterTest.shoot1speed(up, down); }
+    public void intake(boolean in, boolean out){
+        intake_quadestuff2.runIntake( in, out);
     }
     public void drive(double x, double y, double z){
         quades_stuff_iD.loop(x,y,z);
     }
+
+    public void transfer(boolean pressed){ shooterTest.runTransfer(pressed);}
 
 }

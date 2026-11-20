@@ -17,12 +17,15 @@ telemetry=opmode.telemetry;
 hardwareMap=opmode.hardwareMap;
  intake = hardwareMap.get(DcMotor.class, "Intake");
 }
-public void runIntake(boolean pressed){
-        if (pressed){
+    public void runIntake(boolean in, boolean out){
+        if (in){
             intake.setPower(1);
+        }
+        else if(out){
+            intake.setPower(-1);
         }
         else{
             intake.setPower(0);
         }
-}
+    }
 }

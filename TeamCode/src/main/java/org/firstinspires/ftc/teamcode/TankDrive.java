@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-@TeleOp
+//@TeleOp
 public class TankDrive extends OpMode {
     private DcMotor frontRight, frontLeft, backRight, backLeft;
 private double Left, Right;
@@ -23,6 +23,7 @@ private double Left, Right;
 
     @Override
     public void loop() {
+
     Right = -gamepad1.right_stick_y;
     Left = -gamepad1.left_stick_y;
     frontRight.setPower(Right);

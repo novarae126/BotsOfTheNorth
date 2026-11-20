@@ -4,7 +4,9 @@ import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -17,7 +19,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 public class OwenMadeAuton {
     LinearOpMode opmode;
     Telemetry telemetry;
-    private DcMotor frontRight, frontLeft, backRight, backLeft;
+    private DcMotor frontRight, frontLeft, backRight, backLeft, Intake;
+    private DcMotorEx shooter;
+    private CRServo transfer;
     private double tpi = 162.15 / (Math.PI * 4);
     IMU imu;
     HardwareMap HardwareMap;
@@ -26,10 +30,13 @@ public class OwenMadeAuton {
         telemetry = opmode.telemetry;
         HardwareMap = opmode.hardwareMap;
 
-        frontRight=HardwareMap.get(DcMotor.class, "frontRight");
-        backRight=HardwareMap.get(DcMotor.class, "backRight");
-        frontLeft=HardwareMap.get(DcMotor.class,"frontLeft");
-        backLeft=HardwareMap.get(DcMotor.class, "backLeft");
+        shooter = HardwareMap.get(DcMotorEx.class, "shooter");
+        transfer = HardwareMap.get(CRServo.class, "transfer");
+        Intake = HardwareMap.get(DcMotor.class, "Intake");
+        frontRight = HardwareMap.get(DcMotor.class, "frontRight");
+        backRight = HardwareMap.get(DcMotor.class, "backRight");
+        frontLeft = HardwareMap.get(DcMotor.class,"frontLeft");
+        backLeft = HardwareMap.get(DcMotor.class, "backLeft");
         imu = HardwareMap.get(IMU.class, "imu");
 
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -40,8 +47,8 @@ public class OwenMadeAuton {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.RIGHT);
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        //RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FRONT);
+        //imu.initialize(new IMU.Parameters(orientationOnRobot));
     }
 
 
@@ -67,7 +74,7 @@ public class OwenMadeAuton {
         backLeft.setPower(Math.abs(speed));
 
         while (opmode.opModeIsActive() &&
-                (backLeft.isBusy() || backRight.isBusy() || frontRight.isBusy() || frontLeft.isBusy())){
+                (backLeft.isBusy() && backRight.isBusy() && frontRight.isBusy() && frontLeft.isBusy())){
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("frontLeft:", frontLeft.getCurrentPosition());
@@ -97,13 +104,13 @@ public class OwenMadeAuton {
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        backRight.setPower(-(Math.abs(speed)));
+        backRight.setPower(-(Math.abs(speed))/1.1);
         frontLeft.setPower(-(Math.abs(speed)));
-        frontRight.setPower(-(Math.abs(speed)));
-        backLeft.setPower(-(Math.abs(speed)));
+        frontRight.setPower(-(Math.abs(speed))/1.1);
+        backLeft.setPower(-(Math.abs(speed))/1.1);
 
         while (opmode.opModeIsActive() &&
-                (backLeft.isBusy() || backRight.isBusy() || frontRight.isBusy() || frontLeft.isBusy())){
+                (backLeft.isBusy() && backRight.isBusy() && frontRight.isBusy() && frontLeft.isBusy())){
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("frontLeft:", frontLeft.getCurrentPosition());
@@ -139,7 +146,7 @@ public class OwenMadeAuton {
         backLeft.setPower((Math.abs(speed)));
 
         while (opmode.opModeIsActive() &&
-                (backLeft.isBusy() || backRight.isBusy() || frontRight.isBusy() || frontLeft.isBusy())){
+                (backLeft.isBusy() && backRight.isBusy() && frontRight.isBusy() && frontLeft.isBusy())){
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("frontLeft:", frontLeft.getCurrentPosition());
@@ -175,7 +182,7 @@ public class OwenMadeAuton {
         backLeft.setPower(-(Math.abs(speed)));
 
         while (opmode.opModeIsActive() &&
-                (backLeft.isBusy() || backRight.isBusy() || frontRight.isBusy() || frontLeft.isBusy())){
+                (backLeft.isBusy() && backRight.isBusy() && frontRight.isBusy() && frontLeft.isBusy())){
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("backLeft:", backLeft.getCurrentPosition());
             telemetry.addData("frontLeft:", frontLeft.getCurrentPosition());
@@ -257,5 +264,24 @@ public class OwenMadeAuton {
         backRight.setPower(0);
         frontLeft.setPower(0);
         frontRight.setPower(0);
+    }
+
+    public void Shoot(){
+        shooter.setVelocity(1200);
+    }
+
+    public void transfer(){
+        transfer.setPower(1);
+    }
+
+    public void transferStop(){
+        transfer.setPower(0);
+    }
+    public void intake(){
+        Intake.setPower(0.5);
+    }
+
+    public void intakeStop(){
+        Intake.setPower(0);
     }
 }
