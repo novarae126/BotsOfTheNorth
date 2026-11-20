@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
@@ -67,10 +68,10 @@ public class Aiming {
                 AprilTagClusterDetection cluster = (AprilTagClusterDetection) detection;
                 telemetry.addData("detection: ", cluster.metadata.name);
                 telemetry.addData("bearing: ", detection.ftcPose.bearing);
-                String searchString = blue ? "BLUE": "RED";
-                if (cluster.metadata.name.contains(searchString)) {
-                    detected = true;
-                }
+//                String searchString = blue ? "BLUE": "RED";
+//                if (cluster.metadata.name.contains(searchString)) {
+//                    detected = true;
+//                }
             }
 
         }
